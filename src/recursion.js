@@ -60,16 +60,38 @@ var isEven = function(num) {
 	// }
 };
 
+
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
-var sumBelow = function(n) {
-	
+var sumBelow = function(num) {
+	var sum = 0;
+	if(num > 0) {
+		if(num === 0) {
+			return 0; 
+		}
+	  sum = (num - 1) + sumBelow(num - 1);
+  	};
+  	if(num < 0) {
+		num = Math.abs(num);
+		sum = (num - 1) + sumBelow(num - 1); 
+		sum = '-' + sum;
+		sum = parseInt(sum);
+ 	};
+  	return sum; 
 };
+
+ // 	return sum;
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+	var newArr = [];
+	for(i = x; i < y; i ++){
+		newArr.push(i);
+	}
+
+	return newArr; 
 };
 
 // 7. Compute the exponent of a number.
@@ -78,22 +100,46 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+	if (exp === 0) {
+		return 1;
+	};
+	return (exp < 0)? 1 / (base * exponent(base, -1 * exp - 1)): base * exponent(base, exp - 1)
 };
 
 // 8. Determine if a number is a power of two.
 // powerOfTwo(1); // true
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
-var powerOfTwo = function(n) {
-};
+var powerOfTwo = function(num) {
+	if(num === 1) {
+    	return true; 
+  	};
+  	if(num % 2 === 1 || num === 0) {
+    	return false; 
+  	};
+  	return powerOfTwo(num / 2);
+}; 
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
+	if(string.length <= 1) {
+		return string; 
+	} else {
+	  return reverse(string.substring(1)) + string[0]; 
+	};
 };
+
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-};
+  	if(string.length === 1 || string.length === 0) {
+  		return true;
+  	} else if(string[0].toLowerCase() !== string[string.length - 1].toLowerCase()) {
+  		return false; 
+  	};
+  	return palindrome(string.slice(1, string.length - 1));
+  };
+  	
 
 // 11. Write a function that returns the remainder of x divided by y without using the
 // modulo (%) operator.
