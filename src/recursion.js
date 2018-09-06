@@ -268,19 +268,64 @@ var buildList = function(value, length) {
 // For multiples of five, output 'Buzz' instead of the number.
 // For numbers which are multiples of both three and five, output “FizzBuzz” instead of the number.
 // fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
+/*
 var fizzBuzz = function(n) {
-	
+	var newArr = []; //store new value
+	for(var i = 0; i < n; i++) {
+		if(i % 3 === 0 && i % 5 === 0) {
+			newArr.push('FizzBuzz');
+		} else if(i % 3 === 0) {
+			newArr.push('Fizz');
+		} else if(i % 5 === 0) {
+			newArr.push('Buzz');
+		} else {
+			newArr.push(i);
+		}
+	}
+	return newArr; 
+};
+
+	deincrement the value; 
+*/
+var fizzBuzz = function(n) {
+	var newArr = []
+	if(n === 1) {
+		return ['1']; 
+	}
+  if(n % 3 === 0 && n % 5 === 0) {
+    newArr.push('FizzBuzz');
+  } else if(n % 3 === 0) {
+    newArr.push('Fizz');
+  } else if(n % 5 === 0) {
+    newArr.push('Buzz');
+  } else {
+    newArr.push(n.toString());
+  }
+	return fizzBuzz(n-1).concat(newArr); 
 };
 
 // 20. Count the occurence of a value in a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+	if (array.length === 0) {
+		return 0;
+	}
+	var count = array[0] === value? 1: 0;
+	return count + countOccurrence(array.slice(1), value);
 };
 
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
+	// we need to check callback(element);
+		//we're a another function to do something to modify the array elements 
 var rMap = function(array, callback) {
+	var newArr = [];
+	if(array.length === 0) {
+		return newArr; 
+	};
+	newArr = [callback(array[0])].concat(rMap(array.slice(1), callback)); 
+	return newArr; 
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
@@ -308,7 +353,15 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
 var fibonacci = function(n) {
+	var newArr = []
+	if(n <= 1) {
+		return 1
+	};
+	var fib = [fibonacci(n - 1) + fibonacci(n - 2)]
+	return newArr.concat(fib)
 };
+
+console.log(fibonacci(5));
 
 // 26. Return the Fibonacci number located at index n of the Fibonacci sequence.
 // [0,1,1,2,3,5,8,13,21]
@@ -316,6 +369,16 @@ var fibonacci = function(n) {
 // nthFibo(7); // 13
 // nthFibo(3); // 2
 var nthFibo = function(n) {
+	if (n < 0) {
+	 	return null;
+	}
+	if (n === 0) {
+		return 0;
+	}
+	if (n <= 2) {
+		return 1;
+	}
+	return nthFibo(n - 1) + nthFibo (n - 2);
 };
 
 // 27. Given an array of words, return a new array containing each word capitalized.
@@ -344,6 +407,18 @@ var nestedEvenSum = function(obj) {
 // 30. Flatten an array containing nested arrays.
 // flatten([1,[2],[3,[[4]]],5]); // [1,2,3,4,5]
 var flatten = function(array) {
+	var newArr = [];
+	if(array.length === 0) {
+		return newArr;
+	}
+	array.forEach(function(element) {
+		if(Array.isArray(element)) {
+			newArr = newArr.concat(flatten(element))
+		} else {
+			newArr.push(element);
+		}
+	});
+	return newArr;
 };
 
 // 31. Given a string, return an object containing tallies of each letter.
